@@ -1,0 +1,84 @@
+# Delete files created by previous simulation, if exists
+rm -rf all_sim_th_ul_wo_rts_cts.txt
+rm -rf all_sim_th_ul_rts_cts.txt
+rm -rf all_sim_col_ul_wo_rts_cts.txt
+rm -rf all_sim_col_ul_rts_cts.txt
+rm -rf all_sim_drp_ul_wo_rts_cts.txt
+rm -rf all_sim_drp_ul_rts_cts.txt
+rm -rf all_sim_th_dl_wo_rts_cts.txt
+rm -rf all_sim_th_dl_rts_cts.txt
+rm -rf all_sim_col_dl_wo_rts_cts.txt
+rm -rf all_sim_col_dl_rts_cts.txt
+rm -rf all_sim_drp_dl_wo_rts_cts.txt
+rm -rf all_sim_drp_dl_rts_cts.txt
+
+# Delete Plot, if exists
+rm -rf Throughput.png
+rm -rf Collision.png
+rm -rf PacketDrop.png
+
+# Averaged Data Set read by gnuplot
+for flows in 1 5 10 20 30
+do
+    for rngRuns in 1 2 3 4 5
+    do
+        ./waf --run "scratch/source_code --enableRtsCts=0 --nFlows=$flows --RngRun=$rngRuns"
+        if [ $flows == 1 ]
+        then
+            sleep 1m
+        elif [ $flows == 5 ]
+        then
+            sleep 3m
+        elif [ $flows == 10 ]
+        then
+            sleep 5m
+            elif [ $flows == 20 ]
+        then
+            sleep 8m
+            elif [ $flows == 30 ]
+        then
+            sleep 10m
+        fi
+    done
+done
+
+
+# Averaged Data Set read by gnuplot
+for flows in 1 5 10 20 30
+do
+    for rngRuns in 1 2 3 4 5
+    do
+        ./waf --run "scratch/source_code --enableRtsCts=1 --nFlows=$flows --RngRun=$rngRuns"
+        if [ $flows == 1 ]
+        then
+            sleep 1m
+        elif [ $flows == 5 ]
+        then
+            sleep 3m
+        elif [ $flows == 10 ]
+        then
+            sleep 5m
+            elif [ $flows == 20 ]
+        then
+            sleep 8m
+            elif [ $flows == 30 ]
+        then
+            sleep 10m
+        fi
+    done
+done
+
+# Deletes averaged DataSets, if exists
+rm -rf throughput_dataSet.txt
+rm -rf collision_dataSet.txt
+rm -rf drop_dataSet.txt
+
+# .cpp merges the data sets of With and W/o RTS CTS data's
+g++ cpp_script.cpp -o cppScript
+chmod +x cppScript
+./cppScript
+
+rm -rf cppScript
+
+# Generate gnuplot
+gnuplot all_in_one_plt.plt
