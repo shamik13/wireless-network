@@ -1,0 +1,10 @@
+Scenario is 4-cells which are kept in grid manner with inter-cell distance of 1KM with 30dBM like in NWS Final Assignment.
+A) Find out max capacity of the LTE system
+1) Place one UE per cell which is very close to respective eNBs, w/o mobility, full buffer with 12 Mbps UDP flow per UE in
+Downlink from Remote Host.
+2) Plot Time vs SINR for one UE (say UE of cell-1).
+3) Plot Time vs Instantaneous throughput for the same UE.
+B) For the same above scenario, find the min capacity of the LTE system.
+1)Place all 4 UEs at the overlapping region of 4-cells to create max interference scenario.
+2) Plot Time vs SINR for one UE (say UE of cell-1).
+3)Plot Time vs Instantaneous throughput for the same UE.
